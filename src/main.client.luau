@@ -26,35 +26,24 @@ getgenv().BloxaliticsVersion = "0.0.1-rc1"
 local BloxaliticsSettings = getgenv().Bloxalitics
 
 local function GetPlatformName(): string
+    local PlatformOverrides = {
+        ["AndroidTV"]  = "Android",
+        ["Chromecast"] = "Android",
+        ["OSX"]        = "macOS",
+        ["MetaOS"]     = "Meta Quest",
+        ["PS3"]        = "Playstation",
+        ["PS4"]        = "Playstation",
+        ["PS5"]        = "Playstation",
+        ["XBox360"]    = "XBox",
+        ["XBoxOne"]    = "XBox",
+        ["None"]       = "Unknown",
+    }
     local Success, PlatformEnum = pcall(UserInputService.GetPlatform, UserInputService)
 
     if Success then
-        if PlatformEnum == Enum.Platform.Android
-           or PlatformEnum == Enum.Platform.AndroidTV
-           or PlatformEnum == Enum.Platform.Chromecast then
-            return "Android"
-        elseif PlatformEnum == Enum.Platform.Windows then
-            return "Windows"
-        elseif PlatformEnum == Enum.Platform.OSX then
-            return "macOS"
-        elseif PlatformEnum == Enum.Platform.SteamOS then   --
-            return "SteamOS"                                --     Despite them being the same platform, it's better if we
-        elseif PlatformEnum == Enum.Platform.Linux then     --     emphasize it's SteamOS instead of generic Linux.
-            return "Linux"                                  --
-        elseif PlatformEnum == Enum.Platform.UWP then
-            return "UWP"
-        elseif PlatformEnum == Enum.Platform.MetaOS then
-            return "Meta Quest"
-        elseif PlatformEnum == Enum.Platform.PS3
-           or PlatformEnum == Enum.Platform.PS4
-           or PlatformEnum == Enum.Platform.PS5 then
-            return "Playstation"
-        elseif PlatformEnum == Enum.Platform.XBox360
-           or PlatformEnum == Enum.Platform.XBoxOne then
-            return "XBox"
-        elseif PlatformEnum == Enum.Platform.None then
-            return "Unknown"
-        end
+        local Platform = PlatformEnum.Name
+        
+        return PlatformOverrides[Platform] or Platform
     else
         warn(":GetPlatform() not working. Current identity level is: " .. tostring(getthreadidentity()) .. ", might be why?")
     end
