@@ -108,7 +108,7 @@ local Load = function()
     local Success, EncodedTelemetryData = pcall(JSONEncode, HttpService, TelemetryData)
     if not Success then error("Failed to encode telemetry payload! Bailing...") end
     RequestData = {
-        Url = Bloxalitics.APIUri,
+        Url = Bloxalitics.APIUri .. Bloxalitics.TrackEndpoint,
         Method = "POST",
         Headers = {
             ["Content-Type"] = "application/json"
