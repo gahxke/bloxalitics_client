@@ -125,9 +125,8 @@ local Load = function()
                 elseif Request then
                     warn(Request.Body)
                 end
-            end 
-            print("loopy loop")
-            task.wait(1)
+            end
+            task.wait(10)
         end
     end)
 end
